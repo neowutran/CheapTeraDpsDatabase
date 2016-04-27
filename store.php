@@ -12,6 +12,13 @@ if($json === null){
 }
 
 $areaId = $json["areaId"];
+
+
+//TODO REPLACE THAT WITH LIST OF ALLOWED AREA
+if(intval($areaId) <= 400){
+  die();
+}
+
 $bossId = $json["bossId"];
 $partyDps = $json["partyDps"];
 $region = getRegion($json);
