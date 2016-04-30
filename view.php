@@ -1,5 +1,4 @@
 <?php
-
 $region = $_GET["region"];
 $areaId = $_GET["areaId"];
 $bossId = $_GET["bossId"];
@@ -7,19 +6,29 @@ $bossId = $_GET["bossId"];
 ?>
 
 <html>
-$.get('<?php echo "https://storage.sbg1.cloud.ovh.net/v1/AUTH_a2ab8c541a2f4f82b2bc1d39f82a10be/$region.$areaId.$bossId" ?>', function(fight_list){     
-  var objects = $(fight_list).find('object');
+<head>
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+$.get('<?php echo "bypass-cors.php?url=$region.$areaId.$bossId" ?>', function(fight_str){     
+  var list = fight_str.split("\n");
 
-  objects.sort(function(a, b){
-     var name1 = $(a).attr('name');
-     var name2 = $(b).attr('name');
-     var dps1 = name1.split(".")[0];
-     var dps2 = name2.split(".")[0]; 
-     return (parseInt(dps1) - parseInt(dps2));
+  list.sort(function(a, b){
+     var dps1 = a.split(".")[0];
+     var dps2 = b.split(".")[0]; 
+     return (parseInt(dps1) - parseInt(dps2)) * -1;
   });
+   $.each(list, function(index, value){
+   if(value == ""){return;}
+  $("#fight").append("<li><a href='view_fight.php?region=<?php echo $region; ?>&areaId=<?php echo $areaId; ?>&bossId=<?php echo $bossId; ?>&file="+value+"' >"+value+"</a></li>");
+});
 
-  objects.each(function(i,v){
-    console.log($(v).attr('name'));
-  });
 });   
+</script>
+
+<ol id="fight">
+</ol>
+
+</body>
 </html>
