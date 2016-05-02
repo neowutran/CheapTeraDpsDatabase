@@ -15,8 +15,6 @@ if($json === null){
 
 $areaId = $json["areaId"];
 
-
-//TODO REPLACE THAT WITH LIST OF ALLOWED AREA
 if(intval($areaId) <= 400){
   die();
 }
@@ -54,9 +52,9 @@ for($i = 0; $i < 10; $i++){
 	if($hash == $downloaded_content_hash){
 		break;
 	}
-	$command = 'source /home/http/openrc.sh && swift upload --object-name '.$filename.'.txt '.$container.' '.$directory.$filename;
+	$command = 'source /home/http/openrc.sh && swift upload --object-name '.$filename.'.lzma '.$container.' '.$directory.$filename;
 	system($command);
-	$content = file_get_contents("https://storage.sbg1.cloud.ovh.net/v1/AUTH_a2ab8c541a2f4f82b2bc1d39f82a10be/".$container."/".$filename.".txt");
+	$content = file_get_contents("https://storage.sbg1.cloud.ovh.net/v1/AUTH_a2ab8c541a2f4f82b2bc1d39f82a10be/".$container."/".$filename.".lzma");
 	$downloaded_content_hash = hash("sha1", $content);
 }
 
@@ -64,10 +62,6 @@ unlink($directory.$filename);
 unlink($directory.$filename.".json");
 
 function modify_name($json, $region){
-  if($region != "KR" && $region != "JP"){
-	return $json;
-  }
-
   $number_members = count($json["members"]);
   for($i = 0; $i < $number_members; $i++){
     $json["members"][$i]["playerName"] = "Anonymous";//hash("sha1", $json["members"][$i]["playerName"]);
