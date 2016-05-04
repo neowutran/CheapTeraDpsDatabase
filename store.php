@@ -24,7 +24,7 @@ $partyDps = $json["partyDps"];
 $region = getRegion($json);
 if($region === NULL) die();
 $fightDuration = $json["fightDuration"];
-$json = modify_name($json, $region);
+$json = wipe_name($json);
 
 if(!preg_match("#^\d+$#", $areaId) || !preg_match("#^\d+$#", $bossId) || !preg_match("#^\d+$#", $partyDps) || !preg_match("#^\d+$#", $fightDuration)){
   die();
@@ -46,7 +46,7 @@ $downloaded_content_hash = "";
 $container = $region.".".$areaId.".".$bossId;
 
 //openrc.sh => set environnement variable only
-exec('source /home/http/openrc.sh && swift post --header  "X-Container-Read: .r:*,.rlistings" '.$container);
+exec('source /home/http/openrc.sh && swift post --header  "X-Container-Read: .r:*,.rlistings" --header "X-Container-Meta-Access-Control-Allow-Origin:*" '.$container);
 
 for($i = 0; $i < 10; $i++){
 	if($hash == $downloaded_content_hash){
@@ -58,13 +58,15 @@ for($i = 0; $i < 10; $i++){
 	$downloaded_content_hash = hash("sha1", $content);
 }
 
+echo $container."/".$filename.".lzma";
+
 unlink($directory.$filename);
 unlink($directory.$filename.".json");
 
-function modify_name($json, $region){
+function wipe_name($json){
   $number_members = count($json["members"]);
   for($i = 0; $i < $number_members; $i++){
-    $json["members"][$i]["playerName"] = "";//hash("sha1", $json["members"][$i]["playerName"]);
+    unset($json["members"][$i]["playerName"]); //hash("sha1", $json["members"][$i]["playerName"]);
   }
   return $json;
 }

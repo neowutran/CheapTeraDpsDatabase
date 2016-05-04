@@ -1,5 +1,5 @@
 <?php
- header("Access-Control-Allow-Origin: https://storage.sbg1.cloud.ovh.net");
+ header("Access-Control-Allow-Origin: *");
 $region = $_GET["region"];
 $areaId = $_GET["areaId"];
 $bossId = $_GET["bossId"];
@@ -17,9 +17,8 @@ $file = $_GET["file"]
 
 
  var ajax = new XMLHttpRequest();
-ajax.open("GET", '<?php echo "bypass-cors.php?url=$region.$areaId.$bossId&file=$file" ?>', true);
+   ajax.open("GET", '<?php echo "https://storage.sbg1.cloud.ovh.net/v1/AUTH_a2ab8c541a2f4f82b2bc1d39f82a10be/$region.$areaId.$bossId/$file" ?>', true);
     ajax.responseType = "arraybuffer";
-    
     ajax.onload = function () {
         /// LZMA-JS can read Uint8Array directly.
 var on_finish = function(result, error){ $("#raw_fight").append(result);};

@@ -11,7 +11,7 @@ $bossId = $_GET["bossId"];
 </head>
 <body>
 <script type="text/javascript">
-$.get('<?php echo "bypass-cors.php?url=$region.$areaId.$bossId" ?>', function(fight_str){     
+$.get('<?php echo "https://storage.sbg1.cloud.ovh.net/v1/AUTH_a2ab8c541a2f4f82b2bc1d39f82a10be/$region.$areaId.$bossId" ?>', function(fight_str){     
   var list = fight_str.split("\n");
 
   list.sort(function(a, b){
