@@ -64,7 +64,7 @@ unlink($directory.$filename.".json");
 function modify_name($json, $region){
   $number_members = count($json["members"]);
   for($i = 0; $i < $number_members; $i++){
-    $json["members"][$i]["playerName"] = "Anonymous";//hash("sha1", $json["members"][$i]["playerName"]);
+    $json["members"][$i]["playerName"] = "";//hash("sha1", $json["members"][$i]["playerName"]);
   }
   return $json;
 }
