@@ -14,10 +14,21 @@ if($json === null){
 }
 
 $areaId = $json["areaId"];
-
-if(intval($areaId) <= 400){
-  die();
-}
+if (            $areaId != "459" &&
+                $areaId != "759" &&
+                $areaId != "511" &&
+                $areaId != "611" &&
+                $areaId != "711" &&
+                $areaId != "886" &&
+                $areaId != "460" &&
+                $areaId != "467" && 
+                $areaId != "767" &&
+                $areaId != "768" &&
+                $areaId != "468"
+                )
+{   
+   die();
+}   
 
 $bossId = $json["bossId"];
 $partyDps = $json["partyDps"];
@@ -32,15 +43,13 @@ if(!preg_match("#^\d+$#", $areaId) || !preg_match("#^\d+$#", $bossId) || !preg_m
 
 $json["timestamp"] = $time;
 $filename = $partyDps.".".$fightDuration.".".$time.".".$uniqid;
-if(file_put_contents($directory.$filename.".json",json_encode($json)) === false){
-	file_put_contents("cannot write the file", $directory.$filename.".json");
-}
+file_put_contents($directory.$filename.".json",json_encode($json));
 
 ///////////////////////////////////////////////
 ///TODO exec json schemas + integrity check////
 ///////////////////////////////////////////////
 
-system("lzma -9 -c --stdout ".$directory.$filename.".json > ".$directory.$filename);
+system("xz -F lzma -z -6e -c ".$directory.$filename.".json > ".$directory.$filename);
 $hash = hash_file("sha1", $directory.$filename);
 $downloaded_content_hash = "";
 $container = $region.".".$areaId.".".$bossId;

@@ -1,9 +1,8 @@
 <?php
- header("Access-Control-Allow-Origin: *");
 $region = $_GET["region"];
 $areaId = $_GET["areaId"];
 $bossId = $_GET["bossId"];
-$file = $_GET["file"]
+$file = $_GET["file"];
 ?>
 
 <html>
