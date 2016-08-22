@@ -14,6 +14,19 @@ if($json === null){
 }
 
 $areaId = $json["areaId"];
+<<<<<<< HEAD
+=======
+if(
+                $areaId != "467" &&
+                $areaId != "767" &&
+                $areaId != "768" &&
+                $areaId != "468"
+                )
+{
+   die();
+}
+
+>>>>>>> 86366419f7021620940edbfc1c9e6218b842034d
 $bossId = $json["bossId"];
 $partyDps = $json["partyDps"];
 $region = getRegion($json);
@@ -47,6 +60,17 @@ $filename = $partyDps.".".$fightDuration.".".$time.".".$uniqid;
 $container = $region.".".$areaId.".".$bossId;
 mkdir($directory.$container."/", 0777, true);
 file_put_contents($directory.$container."/".$filename.".json",json_encode($json));
+<<<<<<< HEAD
+=======
+
+function wipe_name($json){
+  $number_members = count($json["members"]);
+  for($i = 0; $i < $number_members; $i++){
+    unset($json["members"][$i]["playerName"]); //hash("sha1", $json["members"][$i]["playerName"]);
+  }
+  return $json;
+}
+>>>>>>> 86366419f7021620940edbfc1c9e6218b842034d
 
 function getRegion($json){
   $server = $json["members"][0]["playerServer"];
