@@ -31,7 +31,8 @@ if(
                 $areaId != "769" &&
                 $areaId != "916" &&
                 $areaId != "969" && 
-		$areaId != "970" 
+		$areaId != "970" &&
+		$areaId != "950"
                 )
 {
    die();
